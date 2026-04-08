@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Navbar from '@/components/Navbar';
+
 import Hero from '@/components/Hero';
 
 import ProductSection from '@/components/ProductSection';
@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <Navbar />
+   
       <Hero />
      
       <ProductSection />

@@ -11,113 +11,168 @@ export default function Navbar() {
   const { user, logout } = useAuth();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = ['Home', 'Products', 'Training', 'Testimonials'];
-
   return (
-    <>
+    <div className="max-w-7xl mx-auto">
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ${
-          isScrolled ? 'w-[95%] md:w-[90%]' : 'w-[95%] md:w-[85%]'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 flex items-stretch"
+        style={{ height: '64px' }}
       >
-        <div className="bg-card/95 backdrop-blur-md rounded-full px-6 py-3 shadow-2xl border border-gray-800">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <i className="fas fa-dumbbell text-primary text-2xl"></i>
-              <span className="font-bold text-xl">POWER</span>
-            </Link>
+        {/* Left logo blob — green pill */}
+        <div className="flex items-center justify-center bg-[#6BBF1F] px-5 md:px-8 rounded-br-[2rem] shrink-0">
+          <Link href="/" className="flex items-center justify-center">
+            {/* Four-quadrant logo icon */}
+            <div className="grid grid-cols-2 gap-0.5 w-8 h-8">
+              {[0, 1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className={`rounded-sm ${
+                    i === 0 ? 'bg-white' : 'bg-white/70'
+                  } flex items-center justify-center`}
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#6BBF1F]" />
+                </div>
+              ))}
+            </div>
+          </Link>
+        </div>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
+        {/* Center nav pill */}
+        <div className="flex-1 flex items-center px-3 md:px-6">
+          <div
+            className={`flex items-center w-full max-w-xl mx-auto bg-black/80 backdrop-blur-md border border-white/10 rounded-full px-4 md:px-6 py-2 gap-4 md:gap-6 transition-all duration-300 ${
+              isScrolled ? 'shadow-2xl' : ''
+            }`}
+          >
+            {/* Nav Links */}
+            <div className="hidden md:flex items-center gap-6 flex-1">
+              {['Home', 'Our gym location'].map((link) => (
                 <Link
                   key={link}
-                  href={`/#${link.toLowerCase()}`}
-                  className="text-gray-300 hover:text-primary transition-colors"
+                  href={`/#${link.toLowerCase().replace(/ /g, '-')}`}
+                  className="text-white/80 hover:text-white text-sm font-medium transition-colors whitespace-nowrap"
                 >
                   {link}
                 </Link>
               ))}
+
+              {/* Divider */}
+              <div className="w-px h-4 bg-white/20 hidden md:block" />
+
+              {/* Search */}
+              <div className="flex items-center gap-2 flex-1">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="bg-transparent text-white/70 placeholder:text-white/40 text-sm outline-none flex-1 min-w-0"
+                />
+                <button className="text-white/50 hover:text-white transition-colors">
+                  <i className="fas fa-search text-sm"></i>
+                </button>
+              </div>
             </div>
 
-            {/* Right Section */}
-            <div className="flex items-center space-x-4">
-              <button className="hidden md:block text-gray-300 hover:text-primary">
-                <i className="fas fa-search text-xl"></i>
-              </button>
-              
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  <Link href="/profile">
-                    <button className="btn-primary !py-2">
-                      <i className="fas fa-user mr-2"></i>
-                      Profile
-                    </button>
-                  </Link>
-                  <button onClick={logout} className="btn-secondary !py-2">
-                    <i className="fas fa-sign-out-alt mr-2"></i>
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <Link href="/login">
-                  <button className="btn-primary !py-2">
-                    <i className="fas fa-user-plus mr-2"></i>
-                    Register
-                  </button>
-                </Link>
-              )}
-
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden text-white"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              >
-                <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+            {/* Mobile: just search icon */}
+            <div className="flex md:hidden items-center gap-3 flex-1">
+              <Link href="/#home" className="text-white/80 text-sm">
+                Home
+              </Link>
+              <div className="w-px h-4 bg-white/20" />
+              <button className="text-white/50 ml-auto">
+                <i className="fas fa-search text-sm"></i>
               </button>
             </div>
           </div>
         </div>
+
+        {/* Right — Register button */}
+        <div className="flex items-center shrink-0 pr-2 md:pr-4">
+          {user ? (
+            <div className="flex items-center gap-2">
+              <Link href="/profile">
+                <button className="bg-[#6BBF1F] hover:bg-[#5aaa10] text-white font-bold text-sm uppercase tracking-widest px-5 py-3 rounded-full transition-all duration-200">
+                  Profile
+                </button>
+              </Link>
+              <button
+                onClick={logout}
+                className="border border-white/20 text-white/70 hover:text-white font-semibold text-sm px-4 py-3 rounded-full transition-all duration-200"
+              >
+                <i className="fas fa-sign-out-alt"></i>
+              </button>
+            </div>
+          ) : (
+            <Link href="/login">
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="bg-[#6BBF1F] hover:bg-[#5aaa10] text-white font-black text-sm uppercase tracking-widest px-6 md:px-8 py-3 rounded-full transition-all duration-200 shadow-lg shadow-[#6BBF1F]/30"
+              >
+                Register
+              </motion.button>
+            </Link>
+          )}
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden ml-3 text-white"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <i
+              className={`fas ${
+                isMobileMenuOpen ? 'fa-times' : 'fa-bars'
+              } text-xl`}
+            ></i>
+          </button>
+        </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile dropdown menu */}
       {isMobileMenuOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-24 left-4 right-4 bg-card rounded-2xl p-6 z-40 md:hidden shadow-2xl"
+          exit={{ opacity: 0, y: -10 }}
+          className="fixed top-16 left-3 right-3 bg-black/95 backdrop-blur-md border border-white/10 rounded-2xl p-5 z-40 md:hidden shadow-2xl"
         >
-          <div className="flex flex-col space-y-4">
-            {navLinks.map((link) => (
+          <div className="flex flex-col gap-4">
+            {[
+              'Home',
+              'Our gym location',
+              'Products',
+              'Training',
+              'Testimonials',
+            ].map((link) => (
               <Link
                 key={link}
-                href={`/#${link.toLowerCase()}`}
-                className="text-gray-300 hover:text-primary transition-colors py-2"
+                href={`/#${link.toLowerCase().replace(/ /g, '-')}`}
+                className="text-white/70 hover:text-white transition-colors py-1 text-sm font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link}
               </Link>
             ))}
-            <hr className="border-gray-700" />
-            <button className="text-gray-300 hover:text-primary py-2 text-left">
-              <i className="fas fa-search mr-2"></i>
-              Search
-            </button>
+            <hr className="border-white/10" />
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-white placeholder:text-white/30 outline-none flex-1"
+              />
+              <button className="text-white/50 hover:text-white">
+                <i className="fas fa-search"></i>
+              </button>
+            </div>
           </div>
         </motion.div>
       )}
-    </>
+    </div>
   );
 }
