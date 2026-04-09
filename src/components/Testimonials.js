@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { div } from 'motion/react-client';
 import Image from 'next/image';
 
 const testimonials = [
@@ -88,10 +89,34 @@ function StarRating({ rating }) {
 
 export default function Testimonials() {
   return (
-    <section className="bg-gray-200 mt-[144px] max-w-7xl mx-auto rounded-3xl py-[50px] md:py-[45px] px-[48px] sm:px-6 lg:px-8">
+    <div className='mt-[140px]  max-w-[1691px] mx-auto mb-[42px]'>
+      <div>
+      <motion.h2
+        className="text-2xl md:text-4xl font-bold text-gray-700 mb-3"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        viewport={{ once: true }}
+      >
+        What Our Clients Are Saying
+      </motion.h2>
+
+      <motion.p
+        className="text-gray-600 text-[24px] font-medium mb-[42px] mx-auto"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+        viewport={{ once: true }}
+      >
+        Real Stories, Real Results – Hear From Our Athletes
+      </motion.p>
+    </div>
+      <section className="bg-gray-200  rounded-3xl py-[50px] md:py-[45px] px-[48px] sm:px-6 lg:px-8">
+    
+     
       <div>
         {/* GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6 md:gap-11">
           {testimonials.map((t, index) => (
             <motion.div
               key={t.id}
@@ -104,10 +129,10 @@ export default function Testimonials() {
             >
               {/* CONTENT */}
               <div>
-                <h3 className="text-white text-lg md:text-xl font-bold mb-3">
+                <h3 className="text-white text-lg md:text-[24px] font-medium mb-3">
                   The Best Training Program!
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-gray-400 text-[18px] leading-relaxed">
                   {t.review}
                 </p>
               </div>
@@ -120,16 +145,16 @@ export default function Testimonials() {
                   <Image
                     src={t.avatarImage}
                     alt={t.name}
-                    width={48}
-                    height={48}
+                    width={50}
+                    height={50}
                     className="rounded-full object-cover"
                   />
 
                   <div>
-                    <p className="text-white font-semibold text-sm">
+                    <p className="text-white font-medium text-[24px]">
                       {t.name}
                     </p>
-                    <p className="text-gray-500 text-xs">
+                    <p className="text-gray-500 font-medium text-[18px]">
                       {t.role}
                     </p>
                   </div>
@@ -142,5 +167,6 @@ export default function Testimonials() {
         </div>
       </div>
     </section>
+    </div>
   );
 }

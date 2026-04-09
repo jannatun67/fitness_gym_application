@@ -55,12 +55,21 @@ const products = [
 
 export default function ProductSection() {
   return (
-    <section className=" text-white py-20 px-6">
-        <div className='text-black max-w-7xl mx-auto my-[43px]'>
-            <h1 className='text-2xl font-semibold'>Our Products</h1>
-            <p className='text-[18px] text-gray-500'>Fuel Your Workouts with Protein-Packed Nutrition</p>
+    <section className=" text-white max-w-[1691px] py-20 px-6">
+        <div className='text-black  mx-auto my-[43px]'>
+             <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className="mb-6"
+    >
+      <h1 className="text-4xl font-bold">Our Products</h1>
+      <p className="text-[24px] font-medium text-gray-500">
+        Fuel Your Workouts with Protein-Packed Nutrition
+      </p>
+    </motion.div>
         </div>
-      <div className="max-w-7xl mx-auto">
+      <div className="">
 
         {/* Grid */}
         <div className="grid md:grid-cols-3 gap-10">
@@ -95,17 +104,17 @@ export default function ProductSection() {
                 {/* Content */}
                 <div className="flex justify-between items-center mt-4 ">
                   <div>
-                    <h3 className="text-lg font-medium">
+                    <h3 className="text-2xl font-medium">
                       {product.name}
                     </h3>
 
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-xl font-semibold">
+                      <p className="text-[28px] font-medium">
                         ₹{product.price}.00
                       </p>
 
                       {/* Rating */}
-                      <div className="flex text-green-400 text-sm">
+                      <div className="flex text-green-400 text-[18px]">
                         {'★'.repeat(product.rating)}
                        <span className='text-white'> {'★'.repeat(5 - product.rating)}</span>
                       </div>
